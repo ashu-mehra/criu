@@ -1189,7 +1189,7 @@ static int check_path_remap(struct fd_link *link, const struct fd_parms *parms,
 			 */
 			if (!is_dead) {
 				*end = 0;
-				is_dead = access(rpath, F_OK);
+				is_dead = access(&rpath[1], F_OK); /* Ignore '.' at the start of the filename */
 				*end = '/';
 			}
 
