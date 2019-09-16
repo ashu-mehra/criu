@@ -27,6 +27,17 @@ function run_test {
 		mkdir wdir/i/$1/
 		if ! setsid ./$1 ${CRIU} wdir/i/$1/ < /dev/null &>> wdir/i/$1/test.log; then
 			echo "$1: FAIL"
+			echo "== Output of $1"
+			cat wdir/i/$1/test.log
+			echo "---------------"
+			if [ -f wdir/i/$1/dump.log ]; then
+				echo "== Contents of dump.log"
+				cat wdir/i/$1/dump.log
+			fi
+			if [ -f wdir/i/$1/restore.log ]; then
+				echo "== Contents of restore.log"
+				cat wdir/i/$1/restore.log
+			fi
 			RESULT=1
 		fi
 	fi

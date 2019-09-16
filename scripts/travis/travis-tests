@@ -108,7 +108,7 @@ chmod 0777 test/
 chmod 0777 test/zdtm/static
 chmod 0777 test/zdtm/transition
 
-./test/zdtm.py run -a -p 2 --keep-going $ZDTM_OPTS
+# ./test/zdtm.py run -a -p 2 --keep-going $ZDTM_OPTS
 
 KERN_MAJ=`uname -r | cut -d. -f1`
 KERN_MIN=`uname -r | cut -d. -f2`
@@ -123,43 +123,43 @@ LAZY_EXCLUDE="$LAZY_EXCLUDE -x maps04"
 
 LAZY_TESTS=.*\(maps0\|uffd-events\|lazy-thp\|futex\|fork\).*
 
-./test/zdtm.py run -p 2 -T $LAZY_TESTS --lazy-pages $LAZY_EXCLUDE $ZDTM_OPTS
-./test/zdtm.py run -p 2 -T $LAZY_TESTS --remote-lazy-pages $LAZY_EXCLUDE $ZDTM_OPTS
-./test/zdtm.py run -p 2 -T $LAZY_TESTS --remote-lazy-pages --tls $LAZY_EXCLUDE $ZDTM_OPTS
+#./test/zdtm.py run -p 2 -T $LAZY_TESTS --lazy-pages $LAZY_EXCLUDE $ZDTM_OPTS
+#./test/zdtm.py run -p 2 -T $LAZY_TESTS --remote-lazy-pages $LAZY_EXCLUDE $ZDTM_OPTS
+#./test/zdtm.py run -p 2 -T $LAZY_TESTS --remote-lazy-pages --tls $LAZY_EXCLUDE $ZDTM_OPTS
 
-bash ./test/jenkins/criu-fault.sh
-bash ./test/jenkins/criu-fcg.sh
-bash ./test/jenkins/criu-inhfd.sh
+#bash ./test/jenkins/criu-fault.sh
+#bash ./test/jenkins/criu-fcg.sh
+#bash ./test/jenkins/criu-inhfd.sh
 
-if [ -z "$SKIP_EXT_DEV_TEST" ]; then
-	make -C test/others/mnt-ext-dev/ run
-fi
+# if [ -z "$SKIP_EXT_DEV_TEST" ]; then
+	#make -C test/others/mnt-ext-dev/ run
+# fi
 #make -C test/others/exec/ run
-make -C test/others/make/ run CC="$CC"
-make -C test/others/shell-job/ run
-make -C test/others/rpc/ run
+#make -C test/others/make/ run CC="$CC"
+#make -C test/others/shell-job/ run
+#make -C test/others/rpc/ run
 
-./test/zdtm.py run -t zdtm/static/env00 --sibling
+#./test/zdtm.py run -t zdtm/static/env00 --sibling
 
-./test/zdtm.py run -t zdtm/transition/maps007 --pre 2 --dedup
-./test/zdtm.py run -t zdtm/transition/maps007 --pre 2 --noauto-dedup
-./test/zdtm.py run -t zdtm/transition/maps007 --pre 2 --page-server
-./test/zdtm.py run -t zdtm/transition/maps007 --pre 2 --page-server --dedup
+#./test/zdtm.py run -t zdtm/transition/maps007 --pre 2 --dedup
+#./test/zdtm.py run -t zdtm/transition/maps007 --pre 2 --noauto-dedup
+#./test/zdtm.py run -t zdtm/transition/maps007 --pre 2 --page-server
+#./test/zdtm.py run -t zdtm/transition/maps007 --pre 2 --page-server --dedup
 
-./test/zdtm.py run -t zdtm/static/socket-tcp-local --norst
+#./test/zdtm.py run -t zdtm/static/socket-tcp-local --norst
 
-ip net add test
-./test/zdtm.py run -t zdtm/static/env00 -f h --join-ns
+#ip net add test
+#./test/zdtm.py run -t zdtm/static/env00 -f h --join-ns
 
 # RPC testing
-./test/zdtm.py run -t zdtm/static/env00 --rpc		# Basic
-./test/zdtm.py run -t zdtm/static/env00 --rpc --pre 2 --page-server
-./test/zdtm.py run -t zdtm/static/ptrace_sig -f h --rpc # Error handling (crfail test)
+#./test/zdtm.py run -t zdtm/static/env00 --rpc		# Basic
+#./test/zdtm.py run -t zdtm/static/env00 --rpc --pre 2 --page-server
+#./test/zdtm.py run -t zdtm/static/ptrace_sig -f h --rpc # Error handling (crfail test)
 
-./test/zdtm.py run --empty-ns -T zdtm/static/socket-tcp*-local --iter 2
+#./test/zdtm.py run --empty-ns -T zdtm/static/socket-tcp*-local --iter 2
 
-./test/zdtm.py run -t zdtm/static/env00 -k always
-./test/crit-recode.py
+#./test/zdtm.py run -t zdtm/static/env00 -k always
+#./test/crit-recode.py
 
 # libcriu testing
 make -C test/others/libcriu run
